@@ -13,8 +13,7 @@ require 'Cli_lock.php';
 ```
 * Instantiate and initialize an object with the name of the lock to use
 ```
-$cli_lock = new Cli_lock();
-$cli_lock->init('example');
+$cli_lock = new Cli_lock('example');
 ```
 * Attempt to set the lock.  If successful do your processing, if not do whatever you want to do when there is already an instance running.
 ```
@@ -39,6 +38,7 @@ $this->load->library('cli_lock');
 ```
 * Initialize and attempt to lock your process.
 ```
+$this->cli_lock->init('example');
 if($this->cli_lock->setLock()) {
     // Lock set, do your processing
     echo "Yay I can run";
