@@ -59,19 +59,22 @@ class Cli_lock {
     private $status = true;
     private $message = false;
 
-    public function __construct() {
-        $this->process_id = posix_getpid();
-        $this->lock_dir = realpath(BASEPATH.'/../locks');
+    public function __construct($process_name = '', $lock_dir = false, $retries = 1, $stale_lock_action = LOCK_CLEAR_STALE_NO) {
+        $this->init($process_name, $lock_dir, $retries, $stale_lock_action);
     }
 
     // Function to initialize our object
-    public function init($process_name, $retries = 1, $stale_lock_action = LOCK_CLEAR_STALE_NO) {
+    public function init($process_name, $lock_dir = false, $retries = 1, $stale_lock_action = LOCK_CLEAR_STALE_NO) {
         $this->stale_lock_action = $stale_lock_action;
-        $this->process_id = posix_getpid();
-        $this->process_name = str_replace(' ', '_', $process_name);
-        $this->lock_dir = realpath(BASEPATH.'/../locks');
-        $this->lock_file = $this->lock_dir . '/' . $this->process_name . '.lock';
+		$this->process_id = posix_getpid();
+		$this->process_name = str_replace(' ', '_', $process_name);
         $this->retries = $retries;
+        if($lock_dir && is_dir($lock_dir)) {
+            $this->lock_dir = $lock_dir;
+        } else {
+		    $this->lock_dir = realpath(dirname(__FILE__).'/../locks') ;
+        }
+        $this->lock_file = $this->lock_dir . '/' . $this->process_name . '.lock';
     }
 
     // Function to check if a lock file exists and if so if its pid is still running
