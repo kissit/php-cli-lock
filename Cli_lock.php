@@ -10,7 +10,7 @@
  * 
  * See the readme for example usage:
  *
- * https://github.com/kissit/php-cli-lock/README.md
+ * https://github.com/kissit/php-cli-lock/blob/master/README.md
  *
  * Copyright (C) 2016 KISS IT Consulting <http://www.kissitconsulting.com/>
  * Redistribution and use in source and binary forms, with or without
